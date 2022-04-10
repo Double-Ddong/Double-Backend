@@ -36,6 +36,7 @@ module.exports = {
 
   NO_SELECT_AUTHORITY: "조회 권한 없음.",
   USER_SELECTED: "회원 조회 성공.",
+  USER_SELECTED_FAIL: "회원 조회 실패",
   DB_ERROR : "데이터베이스 입력 에러.",
   FIND_ID : "아이디 찾기 성공",
   CHANGE_PASSWORD : "비밀번호 변경 성공",

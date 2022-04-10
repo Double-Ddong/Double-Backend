@@ -10,13 +10,10 @@ const statusCode = require('../../../module/utils/statusCode');
 const resMessage = require('../../../module/utils/responseMessage')
 /* db 연결 모듈 */
 const db = require('../../../module/pool');
-/* jwt 토큰 모듈 */
-const jwtUtils = require('../../../module/jwt');
 
 /* 회원가입 api */
-router.post('/', async (req, res) => {
-    const email = req.body.Email;
-    const password = req.body.Password;
+router.post('/:UserId', async (req, res) => {
+    const userid = req.params.UserId;
     const nickname = req.body.NickName;
     const sex = req.body.Sex; // 0일경우 남자, 1일경우 여자
     const phone = req.body.Phone;
@@ -30,29 +27,23 @@ router.post('/', async (req, res) => {
     const hobby = req.body.Hobby;
     const introduce = req.body.Introduce;
     
-    const signupQuery = 'INSERT INTO User (Email, Password, NickName, Sex, Phone, Birth, Department, MBTI, Location, Height, Drink, Smoke, Hobby, Introduce, Salt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    const updateprofileQuery = 'UPDATE User SET NickName = ?, Sex = ?, Phone = ?, Birth = ?, Department = ?, MBTI = ?, Location = ?, Height = ?, Drink = ?, Smoke = ?, Hobby = ?, Introduce = ? WHERE UserID = ?'
     
-    const selectUserQuery = 'SELECT UserId FROM User WHERE Email = ?'
-    const selectUserResult = await db.queryParam_Parse(selectUserQuery, email);
-
-    // email 중복 없을 시, 회원가입하기
-    if (selectUserResult[0] == null) {
-        // 비밀번호 암호화 작업
-        const buf = await crypto.randomBytes(64);
-        const salt = buf.toString('base64');
-        const hashedPw = await crypto.pbkdf2(password, salt, 1000, 32, 'SHA512');
-
-        // 암호화된 비밀번호와 함께 INSERT 문 실행
-        const signupResult = await db.queryParam_Arr(signupQuery, [email, hashedPw.toString('base64'), nickname, sex, phone, birth, department, mbti, location, height, drink, smoke, hobby, introduce, salt]);
+    const selectUserQuery = 'SELECT * FROM User WHERE UserId = ?'
+    const selectUserResult = await db.queryParam_Parse(selectUserQuery, userid);
+    
+    if (!selectUserResult) { // UserId에 해당하는 User가 없을 경우
+        res.status(200).send(defaultRes.successFalse(statusCode.OK, resMessage.USER_SELECTED_FAIL));
+    } else { 
+        // 프로필 update 쿼리 실행하기
+        const updateprofileResult = await db.queryParam_Arr(updateprofileQuery, [nickname, sex, phone, birth, department, mbti, location, height, drink, smoke, hobby, introduce, userid]);
         
         // 결과값에 따른 쿼리문 출력하기
-        if (!signupResult) {
+        if (!updateprofileResult) {
             res.status(200).send(defaultRes.successFalse(statusCode.DB_ERROR, resMessage.SIGNUP_FAIL));
-        } else { // 회원가입 성공
+        } else { // 프로필 입력 완료
             res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SIGNUP_SUCCESS));
         }
-    } else { // 중복되는 email 존재시, 회원가입 불가
-        res.status(200).send(defaultRes.successFalse(statusCode.OK, resMessage.DUPLICATED_ID_FAIL));
     }
 
 });
