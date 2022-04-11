@@ -5,5 +5,7 @@ router.use("/signup", require("./signup"));
 router.use("/signin", require("./signin"));
 router.use("/signupProfile", require("./signupProfile"));
 router.use("/signupPhoneAuth", require("./signupPhoneAuth"));
+router.use("/findID", require("./findID"));
+router.use("/findPW", require("./findPW"));
 
 module.exports = router;
