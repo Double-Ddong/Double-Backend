@@ -19,8 +19,8 @@ module.exports = {
   INSERT_CONTENT_SUCCESS: "내용 등록 성공",
   INSERT_CONTENT_FAILED: "내용 등록 실패",
 
-  INSERT_LIKE_SUCCESS: "좋아요 추가 성공",
-  INSERT_LIKE_FAILED: "좋아요 추가 실패",
+  INSERT_PHOTO_SUCCESS: "프로필사진 추가 성공",
+  INSERT_PHOTO_FAILED: "프로필사진 추가 실패",
   DELETE_LIKE_SUCCESS: "좋아요 삭제 성공",
   DELETE_LIKE_FAILED: "좋아요 삭제 실패",
 
@@ -47,4 +47,6 @@ module.exports = {
 
   OVERVIEW_LOOKUP_SUCCESS : "overview 데이터 조회 성공",
   LOOKUP_SUCCESS : "전력조회 성공",
+
+  SEND_MAIL_SUCCESS : "해당 메일로 전송 완료",
 };
