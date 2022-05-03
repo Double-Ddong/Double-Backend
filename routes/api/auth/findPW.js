@@ -6,8 +6,8 @@ const crypto = require('crypto-promise');
 var express = require('express');
 var router = express.Router();
 
-const messageSend = require('./send_message');
-const mailSend = require('./mail_transport');
+const messageSend = require('./sendMessage');
+const mailSend = require('./mailTransport');
 const randomNum = require('./randomNum');
 
 router.post('/', async (req, res) => { 
@@ -37,7 +37,7 @@ router.post('/getPW', async (req, res) => {
     // 임시 비밀번호 생성(랜덤 문자열)
     var new_pwd = Math.random().toString(36).substr(2,11);
     // 임시 비밀번호를 사용자 email로 전송한다.
-    mailSend.sendMail(email, new_pwd);
+    mailSend.sendMailPW(email, new_pwd);
     // 비밀번호 업데이트한다.
     const buf = await crypto.randomBytes(64);
     const salt = buf.toString('base64');

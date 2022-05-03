@@ -6,8 +6,7 @@ const crypto = require('crypto-promise');
 var express = require('express');
 var router = express.Router();
 
-const messageSend = require('./send_message');
-// const mailSend = require('./mail_transport');
+const messageSend = require('./sendMessage');
 const randomNum = require('./randomNum');
 
 router.post('/', async (req, res) => { 

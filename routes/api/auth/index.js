@@ -8,5 +8,6 @@ router.use("/signupProfileImg", require("./signupProfileImg"));
 router.use("/signupPhoneAuth", require("./signupPhoneAuth"));
 router.use("/findID", require("./findID"));
 router.use("/findPW", require("./findPW"));
+router.use("/univMailAuth", require("./univMailAuth"));
 
 module.exports = router;
