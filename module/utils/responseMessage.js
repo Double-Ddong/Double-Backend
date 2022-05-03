@@ -24,6 +24,9 @@ module.exports = {
   DELETE_LIKE_SUCCESS: "좋아요 삭제 성공",
   DELETE_LIKE_FAILED: "좋아요 삭제 실패",
 
+  MODIFY_PROFILE_SUCCESS: "프로필 수정 성공",
+  MODIFY_PROFILE_FAILED: "프로필 수정 실패",
+
   NULL_VALUE: "필요한 값이 없습니다",
 
   INVALID_TOKEN: "잘못된 형식의 토큰입니다.",
