@@ -52,4 +52,6 @@ module.exports = {
   LOOKUP_SUCCESS : "전력조회 성공",
 
   SEND_MAIL_SUCCESS : "해당 메일로 전송 완료",
+
+  DELETE_USER : "유저 삭제 성공"
 };
