@@ -29,12 +29,15 @@ router.post('/', async (req, res) => {
             const tokens = jwtUtils.sign(selectUserResult[0]);
             const accessToken = tokens.token;
             const refreshToken = tokens.refreshToken;
-            const TokenUpdateQuery = "UPDATE User SET accessToken = ?, refreshToken = ? WHERE email= ?";
+            const TokenUpdateQuery = "UPDATE User SET accessToken = ?, refreshToken = ? WHERE Email= ?";
             const TokenUpdateResult = await db.queryParam_Parse(TokenUpdateQuery, [accessToken, refreshToken, email]);
+            const GetIdQuery = "select UserId from User WHERE email= ?";
+            const GetIdQueryResult = await db.queryParam_Parse(GetIdQuery, [email]);
+            var userid = GetIdQueryResult[0].UserId
             if (!TokenUpdateResult) {
                 res.status(200).send(defaultRes.successFalse(statusCode.DB_ERROR, "refreshtoken DB등록 오류 "));
             } else {
-                res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SIGNIN_SUCCESS, {tokens}));
+                res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SIGNIN_SUCCESS, {tokens, userid}));
             }
 
         } else { // 비밀번호 불일치
