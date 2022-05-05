@@ -37,6 +37,8 @@
     "npm": "^7.13.0",
     "promise-mysql": "^3.3.2",
     "promise-mysql-native": "^3.3.2",
-    "rand-token": "^1.0.1"
+    "rand-token": "^1.0.1",
+    "request": "^2.88.2",
+    "socket.io": "^4.5.0"
   }
 }
