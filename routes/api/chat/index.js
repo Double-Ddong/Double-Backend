@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // var express = require('express');
 // var http = require('http').Server(express); 
 // var io = require('socket.io')(http); 
@@ -43,3 +44,11 @@ io.on('connection', function(socket){
 
 
 http.listen(3000, function(){ console.log('listening on *:3000'); });
+
+var express = require('express');
+var router = express.Router();
+
+router.use('/test', require('./test'));
+
+
+module.exports = router;

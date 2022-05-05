@@ -9,5 +9,6 @@ router.use("/signupPhoneAuth", require("./signupPhoneAuth"));
 router.use("/findID", require("./findID"));
 router.use("/findPW", require("./findPW"));
 router.use("/univMailAuth", require("./univMailAuth"));
+router.use("/getUnivName", require("./getUnivName"));
 
 module.exports = router;
