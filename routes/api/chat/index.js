@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // var express = require('express');
 // var http = require('http').Server(express); 
 // var io = require('socket.io')(http); 
