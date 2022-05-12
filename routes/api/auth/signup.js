@@ -35,7 +35,10 @@ router.post('/', async (req, res) => {
         if (!signupResult) {
             res.status(200).send(defaultRes.successFalse(statusCode.DB_ERROR, resMessage.SIGNUP_FAIL));
         } else { // 회원가입 성공
-            res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SIGNUP_SUCCESS));
+
+            const selectUserIdQuery = 'SELECT UserId FROM User where Email = ?';
+            const selectUserIdQueryResult = await db.queryParam_Parse(selectUserIdQuery, email);
+            res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SIGNUP_SUCCESS, selectUserIdQueryResult[0].UserId));
         }
     } else { // 중복되는 email 존재시, 회원가입 불가
         res.status(200).send(defaultRes.successFalse(statusCode.OK, resMessage.DUPLICATED_ID_FAIL));

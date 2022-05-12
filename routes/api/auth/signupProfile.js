@@ -16,7 +16,7 @@ router.post('/:UserId', async (req, res) => {
     const userid = req.params.UserId;
     const nickname = req.body.NickName;
     const sex = req.body.Sex; // 0일경우 남자, 1일경우 여자
-    const phone = req.body.Phone;
+    // const phone = req.body.Phone;
     const birth = req.body.Birth;
     const department = req.body.Department;
     const mbti = req.body.Mbti;
@@ -27,7 +27,7 @@ router.post('/:UserId', async (req, res) => {
     const hobby = req.body.Hobby;
     const introduce = req.body.Introduce;
     
-    const updateprofileQuery = 'UPDATE User SET NickName = ?, Sex = ?, Phone = ?, Birth = ?, Department = ?, MBTI = ?, Location = ?, Height = ?, Drink = ?, Smoke = ?, Hobby = ?, Introduce = ? WHERE UserID = ?'
+    const updateprofileQuery = 'UPDATE User SET NickName = ?, Sex = ?, Birth = ?, Department = ?, MBTI = ?, Location = ?, Height = ?, Drink = ?, Smoke = ?, Hobby = ?, Introduce = ? WHERE UserID = ?'
     
     const selectUserQuery = 'SELECT * FROM User WHERE UserId = ?'
     const selectUserResult = await db.queryParam_Parse(selectUserQuery, userid);
@@ -36,7 +36,7 @@ router.post('/:UserId', async (req, res) => {
         res.status(200).send(defaultRes.successFalse(statusCode.OK, resMessage.USER_SELECTED_FAIL));
     } else { 
         // 프로필 update 쿼리 실행하기
-        const updateprofileResult = await db.queryParam_Arr(updateprofileQuery, [nickname, sex, phone, birth, department, mbti, location, height, drink, smoke, hobby, introduce, userid]);
+        const updateprofileResult = await db.queryParam_Arr(updateprofileQuery, [nickname, sex, birth, department, mbti, location, height, drink, smoke, hobby, introduce, userid]);
         
         // 결과값에 따른 쿼리문 출력하기
         if (!updateprofileResult) {
