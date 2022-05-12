@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/getID', async (req, res) => {
+router.post('/getID', async (req, res) => {
     var phone = req.body.Phone;
     const getIDQuery = 'SELECT Email FROM User WHERE Phone= ?';
     const getIDQueryResult = await db.queryParam_Arr(getIDQuery, phone);
