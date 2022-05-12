@@ -21,6 +21,7 @@ router.post('/', async (req, res) => {
     res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SEND_MAIL_SUCCESS, {sendNum}));
 });
 
+
 router.post('/OK/:UserId', async (req, res) => {
     var UserId = req.params.UserId;
     var University = req.body.University;
@@ -38,3 +39,4 @@ router.post('/OK/:UserId', async (req, res) => {
     });
 
 module.exports = router;
+
