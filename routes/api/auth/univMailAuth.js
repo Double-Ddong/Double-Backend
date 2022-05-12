@@ -15,7 +15,7 @@ const randomNum = require('./randomNum');
 
 router.post('/', async (req, res) => {
     const email = req.body.Email;
-    var sendNum = randomNum.authNo(0,9,6);
+    var sendNum = randomNum.authNo(0,9,4);
     mailSend.sendMailNum(email, sendNum);
 
     res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.SEND_MAIL_SUCCESS, {sendNum}));
