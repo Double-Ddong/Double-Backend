@@ -16,7 +16,7 @@ const db = require('../../../module/pool');
 
 router.get('/:userid', async (req, res) => {
     var userid = req.params.userid;
-    const getTabQuery = 'SELECT NickName, Profile, SendCookie, ReceiveCookie FROM User where UserId = ?';
+    const getTabQuery = 'SELECT Profile,NickName, Email, SendCookie, ReceiveCookie FROM User where UserId = ?';
     const getTabQueryResult = await db.queryParam_Arr(getTabQuery, userid);
     if(!getTabQueryResult){
         res.status(200).send(defaultRes.successFalse(200, resMessage.SELECT_CONTENT_FAILED));
