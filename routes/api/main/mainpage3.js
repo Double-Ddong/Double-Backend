@@ -13,8 +13,8 @@ const resMessage = require('../../../module/utils/responseMessage')
 /* db 연결 모듈 */
 const db = require('../../../module/pool');
 
-router.get('/', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/:userid', async (req, res) => {
+    var userid = req.params.userid;
     
     const getUserQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age' +
     'University, Department, MBTI, Location, Smoke, Introduce, Hobby from User where UserId = ?';

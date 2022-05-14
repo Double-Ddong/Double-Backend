@@ -13,8 +13,8 @@ const resMessage = require('../../../module/utils/responseMessage')
 /* db 연결 모듈 */
 const db = require('../../../module/pool');
 
-router.get('/', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/:userid', async (req, res) => {
+    var userid = req.params.userid;
     
     const getUserQuery = 'select Department,Location,MBTI from User where UserId = ?';
     const getUserQueryResult = await db.queryParam_Arr(getUserQuery, userid)
@@ -22,17 +22,35 @@ router.get('/', async (req, res) => {
     const department = getUserQueryResult[0].Department
     const location = getUserQueryResult[0].Location
     const MBTI = getUserQueryResult[0].MBTI
-
-    const getSimilarQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age from User where Department = ? and not UserId = ? limit 3';
-    const getSimilarQueryResult = await db.queryParam_Arr(getSimilarQuery, [department, userid]);
-
-    const getLocationQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age from User where Location = ? and not UserId = ? limit 3';
-    const getLocationQueryResult = await db.queryParam_Arr(getLocationQuery, [location, userid]);
-
+    console.log(department)
+    console.log(location)
+    console.log(MBTI)
     
-    const getMBTIQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age from User where MBTI = ? and not UserId = ? limit 3';
-    const getMBTIQueryResult = await db.queryParam_Arr(getMBTIQuery, [MBTI, userid]);
 
+    const getSimilarQuery = 
+        'select UserId, Profile, NickName, YEAR(now())-Year(Birth)+1 as Age from User '
+        +'where Department = ? and not UserID = ? and not UserId in (SELECT UserId2 FROM DoubleDDong.Match where UserId1 = ?)'
+        +'limit 3';
+    const getSimilarQueryResult = await db.queryParam_Arr(getSimilarQuery, [department, userid,userid]);
+        const getLocationQuery = 
+        'select UserId, Profile, NickName, YEAR(now())-Year(Birth)+1 as Age '
+        +'from User '
+        +'where Location = ? '
+        +'and not UserID = ?'
+        +'and not UserId in (SELECT UserId2 FROM DoubleDDong.Match where UserId1 = ?)'
+        +'limit 3';
+    const getLocationQueryResult = await db.queryParam_Arr(getLocationQuery, [location, userid,userid]);
+    console.log(getLocationQueryResult)
+    
+    const getMBTIQuery = 
+        'select UserId, Profile, NickName, YEAR(now())-Year(Birth)+1 as Age '
+        +'from User '
+        +'where MBTI = ? '
+        +'and not UserID = ?'
+        +'and not UserId in (SELECT UserId2 FROM DoubleDDong.Match where UserId1 = ?)'
+        +'limit 3';
+    const getMBTIQueryResult = await db.queryParam_Arr(getMBTIQuery, [MBTI, userid,userid]);
+    console.log(getMBTIQueryResult)
 
         if(!getSimilarQueryResult || !getLocationQueryResult || !getMBTIQueryResult){
             res.status(200).send(defaultRes.successFalse(200, resMessage.SELECT_CONTENT_FAILED));

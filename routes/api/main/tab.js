@@ -14,8 +14,8 @@ const resMessage = require('../../../module/utils/responseMessage')
 const db = require('../../../module/pool');
 
 
-router.get('/', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/:userid', async (req, res) => {
+    var userid = req.params.userid;
     const getTabQuery = 'SELECT NickName, Profile, SendCookie, ReceiveCookie FROM User where UserId = ?';
     const getTabQueryResult = await db.queryParam_Arr(getTabQuery, userid);
     if(!getTabQueryResult){
