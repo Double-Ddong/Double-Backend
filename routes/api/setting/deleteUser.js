@@ -17,7 +17,7 @@ router.get('/:UserId', async (req, res) => {
     const deleteUserQueryResult3 = await db.queryParam_Parse(deleteUserQuery3, userid);
 
 
-    res.status(200).send(defaultRes.successFalse(statusCode.OK, resMessage.DELETE_USER));
+    res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.DELETE_USER));
     
 
 });
