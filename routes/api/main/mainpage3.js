@@ -17,7 +17,7 @@ router.get('/:userid', async (req, res) => {
     var userid = req.params.userid;
     
     const getUserQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age, date_format(Birth, "%Y-%m-%d") as Birth,' +
-    'Phone, University, Department, MBTI, Location, Smoke, Drink, Introduce, Hobby from User where UserId = ?';
+    'Phone, University, Department, MBTI, Location, Smoke, Drink, Introduce, Hobby, Height from User where UserId = ?';
     const getUserQueryResult = await db.queryParam_Arr(getUserQuery, userid)
 
     console.log(getUserQueryResult);
