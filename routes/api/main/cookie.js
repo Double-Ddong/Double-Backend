@@ -13,8 +13,8 @@ const resMessage = require('../../../module/utils/responseMessage')
 /* db 연결 모듈 */
 const db = require('../../../module/pool');
 
-router.get('/receive', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/receive/:userid', async (req, res) => {
+    var userid = req.params.userid;
     
     const getCountQuery = 'select count(*) as count from Cookie where ReceiveID = ?';
     const getCountQueryResult = await db.queryParam_Arr(getCountQuery, userid)
@@ -37,8 +37,8 @@ router.get('/receive', async (req, res) => {
 });
 
 
-router.get('/send', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/send/:userid', async (req, res) => {
+    var userid = req.params.userid;
     
     const getCountQuery = 'select count(*) as count from Cookie where SendID = ?';
     const getCountQueryResult = await db.queryParam_Arr(getCountQuery, userid)
