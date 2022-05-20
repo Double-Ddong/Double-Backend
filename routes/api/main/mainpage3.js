@@ -16,10 +16,11 @@ const db = require('../../../module/pool');
 router.get('/:userid', async (req, res) => {
     var userid = req.params.userid;
     
-    const getUserQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age' +
-    'University, Department, MBTI, Location, Smoke, Introduce, Hobby from User where UserId = ?';
+    const getUserQuery = 'select Profile, NickName, YEAR(now())-Year(Birth)+1 as Age, date_format(Birth, "%Y-%m-%d") as Birth,' +
+    'Phone, University, Department, MBTI, Location, Smoke, Drink, Introduce, Hobby, Height from User where UserId = ?';
     const getUserQueryResult = await db.queryParam_Arr(getUserQuery, userid)
 
+    console.log(getUserQueryResult);
 
     if(!getUserQueryResult){
         res.status(200).send(defaultRes.successFalse(200, resMessage.SELECT_CONTENT_FAILED));

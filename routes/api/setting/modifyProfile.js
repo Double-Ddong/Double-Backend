@@ -24,6 +24,7 @@ router.post('/:UserId', upload.single('img'), async (req, res) => {
     const updateprofileQuery = 'UPDATE User SET Profile = ?, NickName = ?, Birth = ?, Department = ?, MBTI = ?, Location = ?, Height = ?, Drink = ?, Smoke = ?, Hobby = ?, Introduce = ? WHERE UserID = ?'
     const selectUserQuery = 'SELECT NickName FROM User WHERE UserId = ?'
     const selectUserResult = await db.queryParam_Parse(selectUserQuery, userid);
+
     
     if (!selectUserResult[0]) { // UserId에 해당하는 User가 없을 경우
         res.status(200).send(defaultRes.successFalse(statusCode.OK, resMessage.USER_SELECTED_FAIL));
@@ -36,7 +37,7 @@ router.post('/:UserId', upload.single('img'), async (req, res) => {
         if (updateprofileResult[0]) {
             res.status(200).send(defaultRes.successFalse(statusCode.DB_ERROR, resMessage.MODIFY_PROFILE_FAILED));
         } else { // 프로필 수정 완료
-            res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.MODIFY_PROFILE_SUCCESS));
+            res.status(200).send(defaultRes.successTrue(statusCode.OK, resMessage.MODIFY_PROFILE_SUCCESS, req.file.location));
         }
     }
 });
