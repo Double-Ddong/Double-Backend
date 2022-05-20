@@ -23,7 +23,7 @@ router.get('/receive/:userid', async (req, res) => {
 
 
     const getReceiveQuery = 
-    'select U.Profile, U.NickName, U.University, U.Department ' +
+    'select U.UserId, U.Profile, U.NickName, U.University, U.Department ' +
     'from User U' +
     ' where U.UserId in (select C.SendID from Cookie C where C.ReceiveID = ?)'
     const getReceiveQueryResult = await db.queryParam_Arr(getReceiveQuery, userid)
@@ -46,7 +46,7 @@ router.get('/send/:userid', async (req, res) => {
 
 
     const getReceiveQuery = 
-    'select U.Profile, U.NickName, U.University, U.Department ' +
+    'select U.UserId, U.Profile, U.NickName, U.University, U.Department ' +
     'from User U' +
     ' where U.UserId in (select C.ReceiveID from Cookie C where C.SendID = ?)'
     const getReceiveQueryResult = await db.queryParam_Arr(getReceiveQuery, userid)
