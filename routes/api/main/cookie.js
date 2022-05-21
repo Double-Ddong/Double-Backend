@@ -13,8 +13,8 @@ const resMessage = require('../../../module/utils/responseMessage')
 /* db 연결 모듈 */
 const db = require('../../../module/pool');
 
-router.get('/receive', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/receive/:userid', async (req, res) => {
+    var userid = req.params.userid;
     
     const getCountQuery = 'select count(*) as count from Cookie where ReceiveID = ?';
     const getCountQueryResult = await db.queryParam_Arr(getCountQuery, userid)
@@ -23,7 +23,7 @@ router.get('/receive', async (req, res) => {
 
 
     const getReceiveQuery = 
-    'select U.Profile, U.NickName, U.University, U.Department ' +
+    'select U.UserId, U.Profile, U.NickName, U.University, U.Department ' +
     'from User U' +
     ' where U.UserId in (select C.SendID from Cookie C where C.ReceiveID = ?)'
     const getReceiveQueryResult = await db.queryParam_Arr(getReceiveQuery, userid)
@@ -37,8 +37,8 @@ router.get('/receive', async (req, res) => {
 });
 
 
-router.get('/send', async (req, res) => {
-    var userid = req.body.userid;
+router.get('/send/:userid', async (req, res) => {
+    var userid = req.params.userid;
     
     const getCountQuery = 'select count(*) as count from Cookie where SendID = ?';
     const getCountQueryResult = await db.queryParam_Arr(getCountQuery, userid)
@@ -46,7 +46,7 @@ router.get('/send', async (req, res) => {
 
 
     const getReceiveQuery = 
-    'select U.Profile, U.NickName, U.University, U.Department ' +
+    'select U.UserId, U.Profile, U.NickName, U.University, U.Department ' +
     'from User U' +
     ' where U.UserId in (select C.ReceiveID from Cookie C where C.SendID = ?)'
     const getReceiveQueryResult = await db.queryParam_Arr(getReceiveQuery, userid)
