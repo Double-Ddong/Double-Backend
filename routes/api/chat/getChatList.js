@@ -14,14 +14,31 @@ router.get('/:UserId', async (req, res) => {
     const selectChatlenResult = await db.queryParam_Parse(selectChatlenQuery, userid);
 
     if(selectChatlenResult[0]) {
-        const selectChatQuery = 'SELECT Message, Date, ChatRoom, NickName, Profile '+
+        var returnResult = [];
+
+        for(var i=0; i<selectChatlenResult.length; i++){
+            const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, Profile '+
                                     'FROM Chat, User '+
-                                    'WHERE ReceiveID = ? AND SendID = UserId '+
+                                    'WHERE ReceiveID = ? AND SendID = UserId AND ChatRoom = ? '+
                                     'ORDER BY ChatRoom, Date'
-        const selectChatResult = await db.queryParam_Parse(selectChatQuery, userid);
-        if(selectChatResult) {
-            res.status(200).send(defaultRes.successTrue(200, selectChatResult));
+            const selectChatResult = await db.queryParam_Parse(selectChatQuery, [userid, selectChatlenResult[i].ChatRoom]);
+            
+            returnResult.push(selectChatResult);
         }
+
+        for(var i=0; i<selectChatlenResult.length; i++){
+            const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, Profile '+
+                                    'FROM Chat, User '+
+                                    'WHERE SendID = ? AND SendID = UserId AND ChatRoom = ? '+
+                                    'ORDER BY ChatRoom, Date'
+            const selectChatResult = await db.queryParam_Parse(selectChatQuery, [userid, selectChatlenResult[i].ChatRoom]);
+            
+            returnResult.push(selectChatResult);
+        }
+
+
+        res.status(200).send(defaultRes.successTrue(200, [selectChatlenResult.length, returnResult]));
+        
 
     }else {
         res.status(200).send(defaultRes.successFalse(statusCode.OK, "채팅방이 존재하지 않습니다."));
