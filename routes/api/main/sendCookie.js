@@ -26,6 +26,8 @@ router.post('/:userid', async (req, res) => {
     const SelectMatchQueryResult = await db.queryParam_Arr(SelectMatchQuery, [otherid,userid])
     var InsertQuery2 = ""
     var InsertQueryResult2 = ""
+    var InsertQuery3 = ""
+    var InsertQueryResult3 = ""
 
     if(!InsertQueryResult){
         res.status(200).send(defaultRes.successFalse(200, "쿠키를 보내지 못했습니다."));
@@ -43,8 +45,15 @@ router.post('/:userid', async (req, res) => {
                 const FindDuplicateQueryResult = await db.queryParam_Arr(FindDuplicateQuery, [Chatroom]);
                 console.log(FindDuplicateQueryResult);
                 if(FindDuplicateQueryResult != []){
+
+
                     InsertQuery2 = 'Insert into Chat(SendID, ReceiveID, Message, Date, ChatRoom) values (?,?,?,?,?)';
-                    InsertQueryResult2 =await db.queryParam_Arr(InsertQuery2, [userid, otherid, "채팅방이 개설되었습니다~",moment().format('YYYY-MM-DD'), Chatroom]);
+                    InsertQueryResult2 =await db.queryParam_Arr(InsertQuery2, [userid, otherid, "채팅방이 개설되었습니다~",moment().format('YYYY-MM-DD hh:mm'), Chatroom]);
+                    
+                    InsertQuery3 = 'insert Into DoubleDDong.Match(UserId1, UserId2) values (?,?)';
+                    InsertQueryResult3 =await db.queryParam_Arr(InsertQuery3, [userid, otherid]);
+                    
+                    
                     break;
                 }
                 else{
