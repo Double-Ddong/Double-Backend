@@ -19,22 +19,22 @@ router.get('/:UserId', async (req, res) => {
         for(var i=0; i<selectChatlenResult.length; i++){
             const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, Profile '+
                                     'FROM Chat, User '+
-                                    'WHERE ReceiveID = ? AND SendID = UserId AND ChatRoom = ? '+
+                                    'WHERE (ReceiveID = ? OR SendID = ?) AND SendId = UserID AND ChatRoom = ? '+
                                     'ORDER BY ChatRoom, Date'
-            const selectChatResult = await db.queryParam_Parse(selectChatQuery, [userid, selectChatlenResult[i].ChatRoom]);
+            const selectChatResult = await db.queryParam_Parse(selectChatQuery, [userid, userid, selectChatlenResult[i].ChatRoom]);
             
             returnResult.push(selectChatResult);
         }
 
-        for(var i=0; i<selectChatlenResult.length; i++){
-            const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, Profile '+
-                                    'FROM Chat, User '+
-                                    'WHERE SendID = ? AND SendID = UserId AND ChatRoom = ? '+
-                                    'ORDER BY ChatRoom, Date'
-            const selectChatResult = await db.queryParam_Parse(selectChatQuery, [userid, selectChatlenResult[i].ChatRoom]);
+        // for(var i=0; i<selectChatlenResult.length; i++){
+        //     const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, Profile '+
+        //                             'FROM Chat, User '+
+        //                             'WHERE SendID = ? AND SendID = UserId AND ChatRoom = ? '+
+        //                             'ORDER BY ChatRoom, Date'
+        //     const selectChatResult = await db.queryParam_Parse(selectChatQuery, [userid, selectChatlenResult[i].ChatRoom]);
             
-            returnResult.push(selectChatResult);
-        }
+        //     returnResult.push(selectChatResult);
+        // }
 
 
         res.status(200).send(defaultRes.successTrue(200, [selectChatlenResult.length, returnResult]));
