@@ -28,12 +28,21 @@ router.post('/:userid', async (req, res) => {
     var InsertQueryResult2 = ""
     var InsertQuery3 = ""
     var InsertQueryResult3 = ""
+    var UpdateQuery = ""
+    var UpdateQueryResult = ""
+    var UpdateQuery2 = ""
+    var UpdateQueryResult2 = ""
 
     if(!InsertQueryResult){
         res.status(200).send(defaultRes.successFalse(200, "쿠키를 보내지 못했습니다."));
     }
     else{
         if(!SelectMatchQueryResult[0]){
+            UpdateQuery = 'update User set SendCookie = SendCookie+1 where UserId = ?'
+            UpdateQueryResult = await db.queryParam_Arr(UpdateQuery, userid)
+            UpdateQuery2 = 'update User set ReceiveCookie = ReceiveCookie+1 where UserId = ?'
+            UpdateQueryResult2 = await db.queryParam_Arr(UpdateQuery2, otherid)
+
             res.status(200).send(defaultRes.successTrue(200, "쿠키를 보냈습니다, 매치는 안된 상태."));
         }
         else{    
@@ -45,6 +54,11 @@ router.post('/:userid', async (req, res) => {
                 const FindDuplicateQueryResult = await db.queryParam_Arr(FindDuplicateQuery, [Chatroom]);
                 console.log(FindDuplicateQueryResult);
                 if(FindDuplicateQueryResult != []){
+
+                    UpdateQuery = 'update User set SendCookie = SendCookie+1 where UserId = ?'
+                    UpdateQueryResult = await db.queryParam_Arr(UpdateQuery, userid)
+                    UpdateQuery2 = 'update User set ReceiveCookie = ReceiveCookie+1 where UserId = ?'
+                    UpdateQueryResult2 = await db.queryParam_Arr(UpdateQuery2, otherid)
 
 
                     InsertQuery2 = 'Insert into Chat(SendID, ReceiveID, Message, Date, ChatRoom) values (?,?,?,?,?)';
