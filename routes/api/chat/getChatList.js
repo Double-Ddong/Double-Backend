@@ -17,7 +17,7 @@ router.get('/:UserId', async (req, res) => {
         var returnResult = [];
 
         for(var i=0; i<selectChatlenResult.length; i++){
-            const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, Profile '+
+            const selectChatQuery = 'SELECT Message, timestampdiff(MINUTE, NOW(), Date) as Date, ChatRoom, NickName, UserId, Profile '+
                                     'FROM Chat, User '+
                                     'WHERE (ReceiveID = ? OR SendID = ?) AND SendId = UserID AND ChatRoom = ? '+
                                     'ORDER BY ChatRoom, Date'
