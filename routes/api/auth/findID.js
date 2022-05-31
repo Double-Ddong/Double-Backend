@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         // 3. 인증번호 코드 만들기
         // 4. 문자서비스 API 이용해서 문자 전송하기 
         var sendNum = randomNum.authNo(0,9,6);
-        messageSend.send_message(phone, sendNum);
+        messageSend.send_message(phone, `[MEET] 인증번호\n${sendNum}를 입력해주세요.`);
        res.status(200).send(defaultRes.successTrue(200, "인증번호 전송 완료", sendNum));
     }
 });
