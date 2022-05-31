@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const upload = require('../../../module/multer.js')
+const mbtiLike = require('../../../module/utils/mbtiLike')
 
 /*crypto : 암호화모듈 */
 const crypto = require('crypto-promise');
@@ -64,10 +65,10 @@ router.get('/:userid/:tabIdx', async (req, res) => {
         const getMBTIQuery = 
         'select UserId, Profile, NickName, YEAR(now())-Year(Birth)+1 as Age '
         +'from User '
-        +'where MBTI = ? '
+        +'where MBTI in (?, ?, ?) '
         +'and not UserID = ?'
         +'and not UserId in (SELECT UserId2 FROM DoubleDDong.Match where UserId1 = ?)';
-        const getMBTIQueryResult = await db.queryParam_Arr(getMBTIQuery, [MBTI, userid,userid]);
+        const getMBTIQueryResult = await db.queryParam_Arr(getMBTIQuery, [mbtiLike[MBTI][0], mbtiLike[MBTI][1], mbtiLike[MBTI][2], userid,userid]);
     
         if(!getMBTIQueryResult){
             res.status(200).send(defaultRes.successFalse(200, resMessage.SELECT_CONTENT_FAILED));

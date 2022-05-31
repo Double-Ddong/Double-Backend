@@ -1,0 +1,18 @@
+module.exports = {
+    "INFP":["ENFJ", "ENTJ", "ENTP"],
+    "ENFP":["INFJ", "INTJ", "ENTJ"],
+    "INFJ":["ENFP", "ENTP", "INFP"],
+    "ENFJ":["INFP", "ISFP", "INFJ"],
+    "INTJ":["ENFP", "ENTP", "INTP"],
+    "ENTJ":["INFP", "INTP", "ENFJ"],
+    "INTP":["ENFJ", "ESTJ", "INFJ"],
+    "ENTP":["INFJ", "INTJ", "ENTJ"],
+    "ISFP":["ENFJ", "ESFJ", "ESTJ"],
+    "ESFP":["ISFJ", "ISTJ", "ESFJ"],
+    "ISTP":["ESFJ", "ESTJ", "ISFJ"],
+    "ESTP":["ISFJ", "ESFJ", "INTP"],
+    "ISFJ":["ESFP", "ESTP", "ISTP"],
+    "ESFJ":["ISFP", "ISTP", "ENTJ"],
+    "ISTJ":["ESFP", "ESFJ", "ISFP"],
+    "ESTJ":["INTP", "ISFP", "ISTP"],
+};
