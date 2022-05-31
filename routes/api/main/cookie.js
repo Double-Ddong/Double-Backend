@@ -58,6 +58,23 @@ router.get('/send/:userid', async (req, res) => {
     }
 });
 
+router.get('/match/:userid/:otherid', async (req, res) => {
+    var userid = req.params.userid;
+    var otherid = req.params.otherid;
+    console.log(userid)
+    console.log(otherid)
+    const getCountQuery = 'SELECT UserId1, UserId2 FROM DoubleDDong.Match where UserId1 = ? and UserId2 = ?';
+    const getCountQueryResult = await db.queryParam_Arr(getCountQuery, [userid, otherid])
+    const getCountQuery2 = 'SELECT UserId1, UserId2 FROM DoubleDDong.Match where UserId1 = ? and UserId2 = ?';
+    const getCountQueryResult2 = await db.queryParam_Arr(getCountQuery2,[otherid,userid])
+    console.log(getCountQueryResult);
+    if(!getCountQueryResult[0] && !getCountQueryResult2[0]){
+        res.status(200).send(defaultRes.successTrue(200,["매치가 안된 상태", getCountQueryResult, getCountQueryResult2]));
+    }
+    else{
+        res.status(200).send(defaultRes.successTrue(200, ["매치가 된 상태",getCountQueryResult, getCountQueryResult2]));
+    }
+});
 
 
 module.exports = router;
