@@ -62,7 +62,7 @@ router.post('/:userid', async (req, res) => {
 
 
                     InsertQuery2 = 'Insert into Chat(SendID, ReceiveID, Message, Date, ChatRoom) values (?,?,?,?,?)';
-                    InsertQueryResult2 =await db.queryParam_Arr(InsertQuery2, [userid, otherid, "채팅방이 개설되었습니다~",moment().format('YYYY-MM-DD hh:mm'), Chatroom]);
+                    InsertQueryResult2 =await db.queryParam_Arr(InsertQuery2, [userid, otherid, "채팅방이 개설되었습니다~",moment().format('YYYY-MM-DD HH:mm'), Chatroom]);
                     
                     InsertQuery3 = 'insert Into DoubleDDong.Match(UserId1, UserId2) values (?,?)';
                     InsertQueryResult3 =await db.queryParam_Arr(InsertQuery3, [userid, otherid]);
